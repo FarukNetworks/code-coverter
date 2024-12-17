@@ -1,0 +1,38 @@
+scan_files_task:
+  description: >
+    Scan through all files in the app-for-scanning directory.
+    Identify Angular-specific components, services, and patterns.
+    Create a comprehensive list of all files and their primary purposes.
+  expected_output: >
+    A detailed list of all Angular files found, including their types
+    (components, services, etc.) and main functionalities.
+  agent: code_scanner
+
+analysis_task:
+  description: >
+    Analyze each Angular file and identify the necessary changes for React migration.
+    Consider:
+    - Component lifecycle methods
+    - State management
+    - Routing
+    - Services to React hooks conversion
+    - Template syntax changes
+    - Angular decorators replacement
+  expected_output: >
+    Detailed analysis of required changes for each file, including specific
+    code patterns that need to be modified.
+  agent: migration_analyst
+
+reporting_task:
+  description: >
+    Create a comprehensive migration report based on the scan and analysis results.
+    Include:
+    - Overview of the application structure
+    - Required changes for each component
+    - Estimated effort
+    - Potential challenges
+    - Step-by-step migration plan
+  expected_output: >
+    A detailed migration report in markdown format with clear sections and
+    actionable steps for converting the application to React.
+  agent: reporting_analyst
