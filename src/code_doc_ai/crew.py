@@ -1,5 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from code_doc_ai.tools.file_generator import FileGenerator
 
 # If you want to run a snippet of code before or after the crew starts, 
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -45,20 +46,23 @@ class CodeDocAi():
 	def scan_files_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['scan_files_task'],
+			tools=[FileGenerator()]
 		)
 
 	@task
 	def analysis_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['analysis_task'],
-			output_file='migration_analysis.md'
+			 tools=[FileGenerator()],
+			 dependencies=[self.scan_files_task()]
 		)
 
 	@task
 	def reporting_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['reporting_task'],
-			output_file='migration_report.md'
+			tools=[FileGenerator()],
+			dependencies=[self.analysis_task()]
 		)
 
 	@crew

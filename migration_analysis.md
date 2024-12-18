@@ -1,59 +1,33 @@
-# Angular to React Migration Strategy
+```
+## Migration Strategy from Angular to React
 
-Here's the complete plan and the strategies involved in migrating an Angular application to React.
+### Step 1: Analyze component lifecycle methods
 
-The migration process involves the following steps:
+Angular follows a declarative approach while React is more of a sequential one. Here are some equivalents:
 
-## 1. Preparation
+- `ngOnInit` in Angular is equivalent to `componentDidMount` in React.
+- `ngOnDestroy` in Angular is equivalent to `componentWillUnmount` in React. 
+- `ngOnChanges` in Angular is equivalent to `componentDidUpdate` in React.
 
-- Understand the architecture of the Angular application.
-- Identify different Angular modules, components, and services used.
-- Note down the directives and template syntax used in the application.
-- Understand the use case of every service, component, or any part of the application.
-- Make a list of all third-party libraries used and their usages.
+### Step 2: State Management
 
-## 2. Component-Based Development
+In Angular, we use services and dependency injection for cross component communication, while in react, we will be using the state management. Angular's two-way-data binding has to be converted into a unidirectional data flow in react using State and Props. 
 
-- Identify the common components in the Application
-- Check if we can make them more atomic to be reusable.
-- One thing to remember is Angular provides a way to maintain the state of the application in Controllers which is different in React, we can use Redux for state Management or we can leverage useState, useEffect hooks provided by React.
+### Step 3: Routing 
 
-## 3. Conversion & Mapping
+Angular uses `RouterModule` from `@angular/router` for routing while in react, we switch to `react-router-dom`. Angular's `<router-outlet>` should be replaced with `Route` and `<routerLink>` should be replaced with `Link` in react.
 
-### Lifecycle Methods
+### Step 4: Services to React hooks 
 
-Angular's lifecycle hooks can be replaced with lifecycle methods in React. Below is a basic mapping:
+Typically, Angular services that fetch data from backend would be converted to custom React hooks. This allows for reuse of data fetching logic across components and also keeps our components free of side effects.
 
-- `ngOnInit()` can be replaced with `componentDidMount()` or `useEffect(...)`
-- `ngOnChanges()` can be replaced with `componentDidUpdate()` or the second argument in `useEffect(...)`
-- `ngOnDestroy()` can be replaced with return function in `useEffect(...)` method
+### Step 5: Template Syntax Changes
 
-### State management
+Angular's template syntax and directives (like *ngIf, *ngFor etc.) will need to be converted to JSX syntax. For example, `*ngIf` would turn into a ternary operation or && operation, and `*ngFor` would become `Array.prototype.map`.
 
-Angular's `ngModel` for two-way data binding is similar to using 'value' and 'onChange' in React, or a combination of 'useState', 'useEffect' a hook for a similar effect.
+### Step 6: Decorators Replacement
 
-### Routing
+Angular heavily uses decorators like @Input(), @Output(), @ViewChild() etc. These should be replaced by state and props in React.
 
-In Angular we have in-built routing module (RouterModule), but in React we have to use third-party libraries like 'react-router-dom'. 
-
-### Dependency Injection
-
-Dependency injection in Angular can be replaced with hooks in React. E.g., `useContext` can be used to replace Angular's providers.
-
-### Service to Hooks Conversion
-
-Service calls in Angular can be replaced with `useEffect` and `fetch` or an external library such as 'axios' for HTTP requests in React.
-
-### Template Syntax
-
-Angular handles logic and conditionals inside the templates, while React handles it in the component itself. So code needs to be migrated accordingly.
-
-## 4. Testing
-
-- React uses Jest for testing, so tests in Angular using Jasmine and Karma need to be migrated to Jest.
-
-## 5. Integration
-
-- Check if all the components are working as expected together.
-
-This is just an overall strategy. The actual migration might need additional steps based on the complexity of the project.
+Please note that thorough testing is required after each step of migration to make sure everything is working as expected.
+```
