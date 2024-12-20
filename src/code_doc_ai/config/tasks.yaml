@@ -1,48 +1,14 @@
-scan_files_task:
-  description: >
-    Scan and categorize all Angular files in the `app-for-scanning` directory.
-    Identify Angular-specific elements and output a structured directory in `output-report`.
-  expected_output: >
-    A well-organized directory structure in `output-report` with all Angular files
-    categorized by their roles in the application.
-  agent: code_scanner
+# scan_files_task:
+#   description: >
+#     Scan the {selected_file} file and copy its complete {covert_from} {covert_type} code.
+#   expected_output: >
+#     Full content and code of the scanned file(s).
+#   agent: code_scanner
 
-analysis_task:
+ 
+code_conversion_task:
   description: >
-    Analyze each categorized file from `scan_files_task` and create
-    corresponding `.md` files in the appropriate `output-report` subdirectory.
-    The analysis should include:
-    - The purpose and functionality of the file.
-    - Metadata for components (e.g., Inputs, Outputs, lifecycle hooks).
-    - Dependencies for services and their potential React equivalents.
-    - Route definitions and suggested React Router configurations.
-    - State management patterns and their migration to Redux, Zustand, or Context API.
-    Include migration steps for converting Angular constructs to React,
-    focusing on:
-    - Functional components, hooks, and context for components/services.
-    - React Router for routing.
-    - Modern state management techniques.
+    Convert {covert_from} code to {covert_type} and save as .{covert_to} file.
   expected_output: >
-    `.md` files for each analyzed Angular file, providing:
-    - File purpose and role in the app.
-    - Migration steps and React equivalents.
-    - Detailed transformation plans.
-  agent: migration_analyst
-
-reporting_task:
-  description: >
-    Generate summary `index.md` files for each category in the `output-report` directory:
-    - Summarize the Angular constructs in the category.
-    - Provide an overview of migration approaches for each construct.
-    - Link to detailed `.md` reports created in `analysis_task`.
-    Focus on:
-    - Best practices for React migration.
-    - Potential challenges and how to address them.
-    - High-level architectural changes required for the React application.
-    The goal is to create a developer-friendly migration blueprint.
-  expected_output: >
-    Summary `index.md` files for each category in `output-report`, providing:
-    - High-level and detailed migration plans.
-    - Links to detailed `.md` reports.
-    - Recommendations for restructuring and best practices.
-  agent: reporting_analyst  
+    Created file in {code_directory}/{selected_file}.{covert_to} with converted {covert_type} code.
+  agent: code_converter

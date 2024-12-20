@@ -11,9 +11,6 @@ dependencies = [
 [project.scripts]
 code_doc_ai = "code_doc_ai.main:run"
 run_crew = "code_doc_ai.main:run"
-train = "code_doc_ai.main:train"
-replay = "code_doc_ai.main:replay"
-test = "code_doc_ai.main:test"
 
 [build-system]
 requires = ["hatchling"]

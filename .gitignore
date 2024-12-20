@@ -1,2 +1,8 @@
 .env
+.venv
 __pycache__/
+output-app/
+!output-app/*
+app-for-scanning/
+!app-for-scanning/*
+
