@@ -4,7 +4,6 @@ from crewai_tools import FileWriterTool
 from pathlib import Path
 from code_doc_ai.tools import FileReadTool
 
-
 def ensure_directory_exists(directory_path):
 	Path(directory_path).mkdir(parents=True, exist_ok=True)
 
@@ -21,24 +20,6 @@ class CodeDocAi():
 	def __init__(self, inputs=None):
 		self.inputs = inputs or {}
 		super().__init__()
-
-	# If you would like to add tools to your agents, you can learn more about it here:
-	# https://docs.crewai.com/concepts/agents#agent-tools
-	# @agent
-	# def code_scanner(self) -> Agent:
-	# 	file_pattern = ('*.vb' if not self.inputs.get('selected_file') 
-	# 				   or self.inputs['selected_file'] == 'all'
-	# 				   else os.path.basename(self.inputs['selected_file']))
-		
-	# 	return Agent(
-	# 		config=self.agents_config['code_scanner'],
-	# 		tools=[
-	# 			FileReadTool(file_path=self.inputs['selected_file'])
-	# 		],
-	# 		verbose=True,
-	# 		allow_delegation=True,
-	# 		# async_execution=True,
-	# 	)
 	
 	@agent
 	def code_converter(self) -> Agent:
@@ -54,21 +35,14 @@ class CodeDocAi():
 			tools=[
 				FileReadTool(file_path=self.inputs['selected_file']),
 				FileWriterTool(
-					directory='output-app',
+					directory=self.inputs['code_directory'],
 					filename_pattern='{filename}',
-					before_write=lambda: ensure_directory_exists('output-app')
+					before_write=lambda: ensure_directory_exists(self.inputs['code_directory'])
 				),
 			],
 			verbose=True,
-			temperature=0.1,
+			temperature=0.1
 		)
-
-	# @task
-	# def scan_files_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['scan_files_task'],
-	# 		agent=self.code_scanner()
-	# 	)
 	
 	@task
 	def code_conversion_task(self) -> Task:
@@ -86,11 +60,9 @@ class CodeDocAi():
 
 		return Crew(
 			agents=[
-				# self.code_scanner(),
 				self.code_converter()
 			],
 			tasks=[
-				# self.scan_files_task(),
 				self.code_conversion_task()
 			],
 			process=Process.sequential,

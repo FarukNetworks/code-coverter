@@ -1,11 +1,3 @@
-# code_scanner:
-#   role: Code Scanner Expert
-#   goal: >
-#     Scan the file and get the complete code from it.
-#   backstory: >
-#     Professionally trained to scan code and identify all files with the {covert_from} extension and code inside it.
-  
-
 code_converter:
   role: Code Converter Agent
   goal: >

@@ -1,11 +1,3 @@
-# scan_files_task:
-#   description: >
-#     Scan the {selected_file} file and copy its complete {covert_from} {covert_type} code.
-#   expected_output: >
-#     Full content and code of the scanned file(s).
-#   agent: code_scanner
-
- 
 code_conversion_task:
   description: >
     Convert {covert_from} code to {covert_type} and save as .{covert_to} file.

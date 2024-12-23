@@ -67,8 +67,10 @@ print(f'\nYou selected {covert_type} (.{covert_to})')
 def get_files_to_scan(directory: str) -> List[str]:
     f"""Get all {covert_from} files from the directory."""
     scaned_files = []
-    for root, _, files in os.walk(directory):
-        for file in files:
+    # Walk through directory in sorted order
+    for root, _, files in sorted(os.walk(directory)):
+        # Sort files within each directory
+        for file in sorted(files):
             if file.endswith(f'.{covert_from}'):
                 scaned_files.append(os.path.join(root, file))
     return scaned_files
@@ -88,6 +90,19 @@ def display_file_menu(files: List[str]) -> str:
             print(f"Invalid selection. Please try again.")
         except ValueError:
             print(f"Please enter a valid number.")
+
+def get_language_config(choice: int, is_source: bool = True) -> tuple[str, str]:
+    language_mappings = {
+        1: ("Visual Basic", "vb") if is_source else ("C#", "cs"),
+        2: ("C#", "cs") if is_source else ("Java", "java"),
+        3: ("Java", "java") if is_source else ("Python", "py"),
+        4: ("Python", "py") if is_source else None
+    }
+    
+    if choice not in language_mappings or (not is_source and choice == 4):
+        raise ValueError("Invalid language choice")
+        
+    return language_mappings[choice]
 
 def run():
     f"""
