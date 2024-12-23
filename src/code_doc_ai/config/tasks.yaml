@@ -9,6 +9,7 @@
 code_conversion_task:
   description: >
     Convert {covert_from} code to {covert_type} and save as .{covert_to} file.
+    Include the complete converted code in the output, not just placeholders.
   expected_output: >
-    Created file in {code_directory}/{selected_file}.{covert_to} with converted {covert_type} code.
+    Created file in {code_directory}/{selected_file}.{covert_to} with the actual converted {covert_type} code.
   agent: code_converter

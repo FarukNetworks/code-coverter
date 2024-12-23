@@ -1,9 +1,8 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools import DirectoryReadTool, FileWriterTool, FileReadTool
+from crewai_tools import FileWriterTool
 from pathlib import Path
-import os
-
+from code_doc_ai.tools import FileReadTool
 
 
 def ensure_directory_exists(directory_path):
@@ -61,6 +60,7 @@ class CodeDocAi():
 				),
 			],
 			verbose=True,
+			temperature=0.1,
 		)
 
 	# @task
